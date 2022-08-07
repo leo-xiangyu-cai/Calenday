@@ -1,0 +1,62 @@
+containers:
+  alpine-env:
+    build_directory: .batect/alpine
+    volumes:
+      - local: .
+        container: /code
+    working_directory: /code
+
+  lint-env:
+    image: node:10-alpine
+    volumes:
+      - local: .
+        container: /code
+    working_directory: /code
+
+  runtime-env:
+    image: node:14-alpine
+    volumes:
+      - local: .
+        container: /code
+    ports:
+      - local: 3000
+        container: 3000
+    working_directory: /code
+
+tasks:
+  lint:
+    description: run eslint
+    run:
+      container: lint-env
+      command: npm run lint
+
+  build:
+    description: build app
+    run:
+      container: runtime-env
+      command: npm run build
+
+  debug:
+    description: Start both mongodb and mongodb-test, run for both local development and local test
+    run:
+      container: debug-env
+
+  runApp:
+    description: Run app in different server. The first argument is the server name.
+    run:
+      container: runtime-env
+      command: npm run start
+
+  test:
+    description: run all unit test and endpoint test
+    prerequisites:
+      - build
+    run:
+      container: test-env
+      command: npm run unitTestDocker
+
+  gitInit:
+    description: init git
+    run:
+      container: alpine-env
+      command: bash scripts/git-init.sh

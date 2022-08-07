@@ -1,0 +1,13 @@
+{
+  "template": "/work",
+  "commit": "4e61ee5547f1e5bb332810db35e4f751100d4261",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "service_name": "Calenday",
+      "project_name": "Calenday",
+      "_template": "/work"
+    }
+  },
+  "directory": null
+}

@@ -1,0 +1,6 @@
+FROM node:10-alpine
+WORKDIR /code
+EXPOSE 5300
+COPY . .
+ENV ENVIRONMENT "TEST_SERVER"
+CMD ["node", "dist/src/server.js"]
